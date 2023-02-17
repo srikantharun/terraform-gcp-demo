@@ -10,32 +10,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  terratest_phase:
+  job1:
     runs-on: ubuntu-latest
     defaults:
       run:
-         shell: bash
-         working-directory: ./test
+        shell: bash
+        working-directory: ./test
 
-      - name: Checkout
-        uses: actions/checkout@main
+        - name: Checkout
+          uses: actions/checkout@main
 
-      - name: Setup GCP Service Account
-        uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
-        with:
-          version: 'latest'
-          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
+        - name: Setup GCP Service Account
+          uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
+          with:
+            version: 'latest'
+            service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+            service_account_key: ${{ secrets.GCP_SA_KEY }}
+            export_default_credentials: true
 
-      - name: Set up Go For Terratest
-        uses: actions/setup-go@v2
+        - name: Set up Go For Terratest
+          uses: actions/setup-go@v2
 
-      - name: Setup Dependencies
-        run:  go get -v -t -d && go mod tidy
+        - name: Setup Dependencies
+          run:  go get -v -t -d && go mod tidy
 
-      - name: Test
-        run: go test -v
+        - name: Test
+          run: go test -v
 
 jobs:
   terraplan_phase:
