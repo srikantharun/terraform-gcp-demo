@@ -74,8 +74,7 @@ func TestTerraformGcp(t *testing.T) {
             "management_subnet_name"     : management_subnet_name,
             "user_name"                  : user_name, 
             "user_password"              : user_password,
-            "owner"                      : owner
-
+            "owner"                      : owner,
         },
 
 		EnvVars: map[string]string{
