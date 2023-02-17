@@ -50,11 +50,11 @@ jobs:
         uses: actions/setup-go@v2
         
       - name: Setup Dependencies
-        working-directory: tests/
+        working-directory: ${{ github.workspace }}/tests/
         run:  go get -v -t -d && go mod tidy
 
       - name: Test
-        working-directory: tests/
+        working-directory: ${{ github.workspace }}/tests/
         run: go test -v
                        
 
