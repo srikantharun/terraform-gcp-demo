@@ -12,7 +12,7 @@ concurrency:
 defaults:
   run:
     shell: bash
-
+    working-directory: ./dev
 jobs:
   terraform_plan:
     name: 'Terraform Plan'
