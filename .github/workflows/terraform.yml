@@ -9,12 +9,14 @@ concurrency:
   group: ${{ github.action == 'terraform-automation' }}
   cancel-in-progress: true
 
-defaults:
-  run:
-    shell: bash
-    working-directory: ./test
 jobs:
   terratest_phase:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+         shell: bash
+         working-directory: ./test
+
       - name: Checkout
         uses: actions/checkout@main
 
@@ -35,15 +37,13 @@ jobs:
       - name: Test
         run: go test -v
 
-
-defaults:
-  run:
-    shell: bash
-    working-directory: ./dev
 jobs:
-  terraform_plan:
-    name: 'Terraform Plan'
+  terraplan_phase:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+         shell: bash
+         working-directory: ./dev
     if: github.event_name == 'push' || github.event_name != 'pull_request'
 
     permissions:
