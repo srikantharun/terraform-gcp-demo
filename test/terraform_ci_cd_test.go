@@ -51,7 +51,7 @@ func TestTerraformGcp(t *testing.T) {
 
         Vars: map[string]interface{}{
             "env"                        : env,
-            "region"                     : region,
+            "region"                     : db_region,
             "billing_account"            : billing_Account,
             "org_id"                     : org_id,
             "zones"                      : randonZone,
