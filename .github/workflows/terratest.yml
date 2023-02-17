@@ -12,10 +12,10 @@ concurrency:
 defaults:
   run:
     shell: bash
-    working-directory: ./dev
+    working-directory: ./test
 jobs:
-  terraform_plan:
-    name: 'Terraform Plan'
+  terratest_plan:
+    name: 'Terratest Plan'
     runs-on: ubuntu-latest
     if: github.event_name == 'push' || github.event_name != 'pull_request'
 
@@ -45,13 +45,14 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
-      - name: Terraform Plan
-        continue-on-error: true
-        run: |
-            terraform init
-            terraform plan -var-file="dev.auto.tfvars"
 
+      - name: Set up Go For Terratest
+        uses: actions/setup-go@v2
+        
+      - name: Setup Dependencies
+        working-directory: tests/
+        run:  go get -v -t -d && go mod tidy
 
-      #- name: Terraform Apply
-      #  run: |
-      #      terraform apply -var-file="dev.auto.tfvars" --auto-approve
+      - name: Test
+        working-directory: tests/
+        run: go test -v
