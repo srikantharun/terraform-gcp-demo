@@ -50,9 +50,7 @@ jobs:
         uses: actions/setup-go@v2
         
       - name: Setup Dependencies
-        working-directory: tests/
         run:  go get -v -t -d && go mod tidy
 
       - name: Test
-        working-directory: tests/
         run: go test -v
