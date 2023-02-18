@@ -17,6 +17,7 @@ func TestTerraformGcp(t *testing.T) {
         terraformDir := "../dev"
         projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
 
+
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
 
