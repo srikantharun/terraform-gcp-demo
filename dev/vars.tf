@@ -21,7 +21,7 @@ variable "org_id" {
 variable "zones" {
   type        = list(string)
   description = "GCP availability zones"
-  default     = "["europe-west3-a", "europe-west3-b"]"
+  default     = ["europe-west3-a", "europe-west3-b"]
 }
 
 variable "webservers_subnet_ip_range" {
