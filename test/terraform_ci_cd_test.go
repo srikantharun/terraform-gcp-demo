@@ -16,7 +16,6 @@ func TestTerraformGcp(t *testing.T) {
         instanceNumber := 1
         terraformDir := "../dev"
         projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
-        randomZone := []string {"europe-west3-a", "europe-west3-b"}
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
@@ -27,7 +26,7 @@ func TestTerraformGcp(t *testing.T) {
             "region"                     : "europe-west3",
             "billing_account"            : "01B7CB-3DEFDD-94C950",
             "org_id"                     : "terracloud-377520",
-            "zones"                      : randomZone,
+            "zones"                      : []string{"europe-west3-a", "europe-west3-b",
             "webservers_subnet_ip_range" : "192.168.1.0/24",
             "management_subnet_ip_range" : "192.168.100.0/24",
             "bastion_image"              : "centos-7-v20170918",
@@ -61,7 +60,7 @@ func TestTerraformGcp(t *testing.T) {
 	instanceGroupName := terraform.Output(t, terraformOptions, "instance_group_name")
 
 	// Get the instance group
-	instanceGroup := gcp.FetchZonalInstanceGroup(t, projectID, randomZone, instanceGroupName)
+	instanceGroup := gcp.FetchZonalInstanceGroup(t, projectID, []string{"europe-west3-a", "europe-west3-b", instanceGroupName)
 
 	maxRetries := 40
 	sleepBetweenRetries := 2 * time.Second
