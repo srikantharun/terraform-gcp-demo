@@ -17,64 +17,38 @@ import (
 func TestTerraformGcp(t *testing.T) {
 	t.Parallel()
 
-	env := "ci"
         instanceNumber := 1
-        billing_Account = "01B7CB-3DEFDD-94C950"
-        org_id = "terracloud-377520"
-        webservers_subnet_ip_range = "192.168.1.0/24"
-        management_subnet_ip_range = "192.168.100.0/24"
-        bastion_image = "centos-7-v20170918"
-        bastion_instance_type = "e2-micro"
-        user = "srikdev"
-        ssh_key = "gcp_single.json"
-        db_region = "europe-west3"
-	appserver_count := 1
-        app_image = "Centos-7-v30230203"
-        app_instance_type = "e2-micro"
-        project_name = "terracloud-test"
-        network_name = "terraclouddevnetwork"
-        db_name = "terraclouddevdb"
-        instance_template_name = "terraclouddevinstanceci"
-        webservers_subnet_name = "devwebservers"
-        management_subnet_name = "devmanagement"
-        user_name = "hellodev"
-        user_password = "hellodev"
-        owner = "srik"
-	projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
-	randomRegion := gcp.GetRandomRegion(t, projectID, nil, nil)
-	randomZone := gcp.GetRandomZoneForRegion(t, projectID, randomRegion)
-	terraformDir := "../dev/"
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
 
 
         Vars: map[string]interface{}{
-            "env"                        : env,
-            "region"                     : db_region,
-            "billing_account"            : billing_Account,
-            "org_id"                     : org_id,
+            "env"                        : "ci",
+            "region"                     : "europe-west3",
+            "billing_account"            : "01B7CB-3DEFDD-94C950",
+            "org_id"                     : "terracloud-377520",
             "zones"                      : randonZone,
-            "webservers_subnet_ip_range" : webservers_subnet_ip_range,
-            "management_subnet_ip_range" : management_subnet_ip_range,
-            "bastion_image"              : bastion_image,
-            "bastion_instance_type"      : bastion_instance_type,
-            "user"                       : user,
-            "ssh_key"                    : ssh_key,
+            "webservers_subnet_ip_range" : "192.168.1.0/24",
+            "management_subnet_ip_range" : "192.168.100.0/24",
+            "bastion_image"              : "centos-7-v20170918",
+            "bastion_instance_type"      : "e2-micro",
+            "user"                       : "srikci",
+            "ssh_key"                    : "gcp_single.json",
             "db_region"                  : randonRegion,
-            "appserver_count"            : appserver_count,
-            "app_image"                  : app_image,
-            "app_instance_type"          : app_instance_type,
-            "project_name"               : project_name,
-            "project_id"                 : projectID,
-            "network_name"               : network_name,
-            "db_name"                    : db_name,
-            "instace_template_name"      : instance_template_name,
-            "webservers_subnet_name"     : webservers_subnet_name,
-            "management_subnet_name"     : management_subnet_name,
-            "user_name"                  : user_name, 
-            "user_password"              : user_password,
-            "owner"                      : owner,
+            "appserver_count"            : "1",
+            "app_image"                  : "Centos-7-v30230203",
+            "app_instance_type"          : "e2-micro",
+            "project_name"               : "terracloud-test",
+            "project_id"                 : gcp.GetGoogleProjectIDFromEnvVar(t),
+            "network_name"               : "terraclouddevnetwork",
+            "db_name"                    : "cidb",
+            "instace_template_name"      : "citemp",
+            "webservers_subnet_name"     : "webci",
+            "management_subnet_name"     : "mgmtci",
+            "user_name"                  : "tempci", 
+            "user_password"              : "tempci",
+            "owner"                      : "srici",
         },
 
 		EnvVars: map[string]string{
