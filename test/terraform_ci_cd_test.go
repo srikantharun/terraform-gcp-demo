@@ -47,7 +47,11 @@ func TestTerraformGcp(t *testing.T) {
             "user_name"                  : "tempci", 
             "user_password"              : "tempci",
             "owner"                      : "srici",
-        }
+        },
+
+		EnvVars: map[string]string{
+			"GOOGLE_CLOUD_PROJECT": projectID,
+		},
 
 	}
 
