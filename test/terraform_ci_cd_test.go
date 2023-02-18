@@ -28,7 +28,7 @@ func TestTerraformGcp(t *testing.T) {
             "region"                     : "europe-west3",
             "billing_account"            : "01B7CB-3DEFDD-94C950",
             "org_id"                     : "terracloud-377520",
-            "zones"                      : randoneZone,
+            "zones"                      : randomZone,
             "webservers_subnet_ip_range" : "192.168.1.0/24",
             "management_subnet_ip_range" : "192.168.100.0/24",
             "bastion_image"              : "centos-7-v20170918",
