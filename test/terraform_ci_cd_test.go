@@ -6,11 +6,8 @@ import (
 	"time"
 
 	"github.com/gruntwork-io/terratest/modules/gcp"
-        "github.com/gruntwork-io/terratest/modules/random"
 	"github.com/gruntwork-io/terratest/modules/retry"
-        "github.com/gruntwork-io/terratest/modules/ssh"
 	"github.com/gruntwork-io/terratest/modules/terraform"
-        test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
         "github.com/stretchr/testify/assert"
 )
 
@@ -18,6 +15,8 @@ func TestTerraformGcp(t *testing.T) {
 	t.Parallel()
 
         instanceNumber := 1
+        terraformDir := "../dev"
+        projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
@@ -28,19 +27,19 @@ func TestTerraformGcp(t *testing.T) {
             "region"                     : "europe-west3",
             "billing_account"            : "01B7CB-3DEFDD-94C950",
             "org_id"                     : "terracloud-377520",
-            "zones"                      : randonZone,
+            "zones"                      : "europe-west3-a",
             "webservers_subnet_ip_range" : "192.168.1.0/24",
             "management_subnet_ip_range" : "192.168.100.0/24",
             "bastion_image"              : "centos-7-v20170918",
             "bastion_instance_type"      : "e2-micro",
             "user"                       : "srikci",
             "ssh_key"                    : "gcp_single.json",
-            "db_region"                  : randonRegion,
+            "db_region"                  : "europe-west3",
             "appserver_count"            : "1",
             "app_image"                  : "Centos-7-v30230203",
             "app_instance_type"          : "e2-micro",
             "project_name"               : "terracloud-test",
-            "project_id"                 : gcp.GetGoogleProjectIDFromEnvVar(t),
+            "project_id"                 : projectID,
             "network_name"               : "terraclouddevnetwork",
             "db_name"                    : "cidb",
             "instace_template_name"      : "citemp",
