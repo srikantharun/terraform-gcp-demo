@@ -47,7 +47,8 @@ func TestTerraformGcp(t *testing.T) {
             "user_name"                  : "tempci", 
             "user_password"              : "tempci",
             "owner"                      : "srici",
-        },
+        }
+
 	}
 
 	// Destroy all resources in any exit case
