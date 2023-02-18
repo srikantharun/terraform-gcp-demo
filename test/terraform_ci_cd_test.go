@@ -16,7 +16,7 @@ func TestTerraformGcp(t *testing.T) {
         instanceNumber := 1
         terraformDir := "../dev"
         projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
-        randomZone := gcp.GetRandomZoneForRegion(t, projectID, "europe-west3")
+        randomZone := []string {"europe-west3-a", "europe-west3-b"}
 
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
@@ -49,10 +49,6 @@ func TestTerraformGcp(t *testing.T) {
             "user_password"              : "tempci",
             "owner"                      : "srici",
         },
-
-		EnvVars: map[string]string{
-			"GOOGLE_CLOUD_PROJECT": projectID,
-		},
 	}
 
 	// Destroy all resources in any exit case
