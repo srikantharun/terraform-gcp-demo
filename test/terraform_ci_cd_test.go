@@ -8,7 +8,6 @@ import (
 	"github.com/gruntwork-io/terratest/modules/gcp"
 	"github.com/gruntwork-io/terratest/modules/retry"
 	"github.com/gruntwork-io/terratest/modules/terraform"
-        "github.com/stretchr/testify/assert"
 )
 
 func TestTerraformGcp(t *testing.T) {
@@ -65,7 +64,7 @@ func TestTerraformGcp(t *testing.T) {
 	instanceGroupName := terraform.Output(t, terraformOptions, "instance_group_name")
 
 	// Get the instance group
-	instanceGroup := gcp.FetchZonalInstanceGroup(t, projectID, randomZone, instanceGroupName)
+	instanceGroup := gcp.FetchZonalInstanceGroup(t, projectID, "eurpoe-west3-a", instanceGroupName)
 
 	maxRetries := 40
 	sleepBetweenRetries := 2 * time.Second
