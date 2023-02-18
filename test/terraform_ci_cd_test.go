@@ -16,7 +16,6 @@ func TestTerraformGcp(t *testing.T) {
         instanceNumber := 1
         terraformDir := "../dev"
         projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
-        randomRegion := gcp.GetRandomRegion(t, projectID, nil, nil) 
         randomZone := gcp.GetRandomZoneForRegion(t, projectID, "europe-west3")
 
 	terraformOptions := &terraform.Options{
