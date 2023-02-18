@@ -8,7 +8,7 @@ module "network" {
   name                       = var.network_name
   project                    = var.project_id
   region                     = var.region
-  zones                      = var.zones
+  zones                      = ["europe-west3-a", "europe-west3-b"] 
   webservers_subnet_name     = var.webservers_subnet_name
   webservers_subnet_ip_range = var.webservers_subnet_ip_range
   management_subnet_name     = var.management_subnet_name
