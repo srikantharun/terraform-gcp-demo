@@ -52,8 +52,6 @@ func TestTerraformGcp(t *testing.T) {
 
 	}
 
-	// Destroy all resources in any exit case
-	defer terraform.Destroy(t, terraformOptions)
 
 	// Run terraform init and apply
 	terraform.InitAndApply(t, terraformOptions)
@@ -80,4 +78,6 @@ func TestTerraformGcp(t *testing.T) {
 		return "", nil
 	})
 
+	// Destroy all resources in any exit case
+	defer terraform.Destroy(t, terraformOptions)
 }
