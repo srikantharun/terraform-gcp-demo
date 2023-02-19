@@ -19,7 +19,6 @@ func TestTerraformGcp(t *testing.T) {
         projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
      
         bucketName := fmt.Sprintf("test-tf-gcs-bucket-%s", "01")
-        defer gcp.DeleteStorageBucket(t,bucketName)
     
         gcp.CreateStorageBucket(t,projectID,bucketName, &storage.BucketAttrs{Location: "EU"})
 
@@ -68,6 +67,9 @@ func TestTerraformGcp(t *testing.T) {
 
 	// Destroy all resources in any exit case
 	defer terraform.Destroy(t, terraformOptions)
+
+        defer gcp.EmptyStorageBucket(t,bucketName)
+        defer gcp.DeleteStorageBucket(t,bucketName)
 
 	// Run terraform init and apply
 	terraform.InitAndApply(t, terraformOptions)
