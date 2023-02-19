@@ -36,7 +36,7 @@ func TestTerraformGcp(t *testing.T) {
             "ssh_key"                    : "gcp_single.json",
             "db_region"                  : "europe-west3",
             "appserver_count"            : "1",
-            "app_image"                  : "centos-7-v30230203",
+            "app_image"                  : "centos-7-v20170918",
             "app_instance_type"          : "e2-micro",
             "project_name"               : "terracloud-test",
             "project_id"                 : projectID,
