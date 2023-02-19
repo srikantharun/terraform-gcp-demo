@@ -23,7 +23,7 @@ func TestTerraformGcp(t *testing.T) {
 
 
         Vars: map[string]interface{}{
-            "env"                        : "ci",
+            "env"                        : "ci2",
             "region"                     : "europe-west3",
             "billing_account"            : "01B7CB-3DEFDD-94C950",
             "org_id"                     : "terracloud-377520",
@@ -32,7 +32,7 @@ func TestTerraformGcp(t *testing.T) {
             "management_subnet_ip_range" : "192.168.100.0/24",
             "bastion_image"              : "centos-7-v20170918",
             "bastion_instance_type"      : "e2-micro",
-            "user"                       : "srikci",
+            "user"                       : "srikci2",
             "ssh_key"                    : "gcp_single.json",
             "db_region"                  : "europe-west3",
             "appserver_count"            : "1",
@@ -41,23 +41,22 @@ func TestTerraformGcp(t *testing.T) {
             "project_name"               : "terracloud-test",
             "project_id"                 : projectID,
             "network_name"               : "terraclouddevnetwork",
-            "db_name"                    : "cidb",
-            "instace_template_name"      : "citemp",
-            "webservers_subnet_name"     : "webci",
-            "management_subnet_name"     : "mgmtci",
-            "user_name"                  : "tempci", 
-            "user_password"              : "tempci",
-            "owner"                      : "srici",
+            "db_name"                    : "ci2db",
+            "instace_template_name"      : "ci2temp",
+            "webservers_subnet_name"     : "webci2",
+            "management_subnet_name"     : "mgmtci2",
+            "user_name"                  : "tempci2", 
+            "user_password"              : "tempci2",
+            "owner"                      : "srici2",
         },
 
 	}
 
-        terraform.Init(t, terraformOptions)
 	// Destroy all resources in any exit case
-	terraform.Destroy(t, terraformOptions)
+	defer terraform.Destroy(t, terraformOptions)
 
 	// Run terraform init and apply
-	//terraform.InitAndApply(t, terraformOptions)
+	terraform.InitAndApply(t, terraformOptions)
 
 	// Get the instance group name from the output
 	instanceGroupName := terraform.Output(t, terraformOptions, "instance_group_name")
