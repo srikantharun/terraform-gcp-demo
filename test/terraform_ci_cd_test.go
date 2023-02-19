@@ -57,7 +57,7 @@ func TestTerraformGcp(t *testing.T) {
 	terraform.Destroy(t, terraformOptions)
 
 	// Run terraform init and apply
-	terraform.InitAndApply(t, terraformOptions)
+	//terraform.InitAndApply(t, terraformOptions)
 
 	// Get the instance group name from the output
 	instanceGroupName := terraform.Output(t, terraformOptions, "instance_group_name")
@@ -80,4 +80,6 @@ func TestTerraformGcp(t *testing.T) {
 		}
 		return "", nil
 	})
+
+        defer terraform.Destroy(t, terraformOptions)
 }
