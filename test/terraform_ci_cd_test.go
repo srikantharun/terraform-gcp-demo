@@ -52,6 +52,7 @@ func TestTerraformGcp(t *testing.T) {
 
 	}
 
+        terraform.Init(t, terraformOptions)
 	// Destroy all resources in any exit case
 	terraform.Destroy(t, terraformOptions)
 
