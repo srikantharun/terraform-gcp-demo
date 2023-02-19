@@ -61,7 +61,7 @@ func TestTerraformGcp(t *testing.T) {
 	terraform.InitAndApply(t, terraformOptions)
         instanceName := terraform.Output(t, terraformOptions, "instance_name")
 
-	instanceGroup := gcp.FetchInstance(t, projectID, injname)
+	instance := gcp.FetchInstance(t, projectID, instanceName)
         instance.SetLabels(t, map[string]string{"environmentname": "cd2"})
 
         expectedText := "cd2"
