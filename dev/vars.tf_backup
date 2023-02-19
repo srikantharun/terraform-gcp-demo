@@ -1,7 +1,7 @@
 variable "env" { default = "dev" }
 variable "region" { default = "europe-west3" }
 variable "billing_account" {default = "013A1A-C1D4E2-ADD398"}
-variable "org_id" {default = "terracloud-377520"}
+variable "org_id" {default = "terracloud-377521"}
 variable "zones" { default = ["europe-west3-a", "europe-west3-b"] }
 variable "webservers_subnet_ip_range" { default = "192.168.1.0/24"}
 variable "management_subnet_ip_range" { default = "192.168.100.0/24"}
@@ -17,7 +17,7 @@ variable "appserver_count" { default = 2 }
 variable "app_image" { default = "centos-7-v20230203" }
 variable "app_instance_type" { default = "e2-micro" }
 variable "project_name" {default = "terracloud"}
-variable "project_id" {default = "terracloud-377520"}
+variable "project_id" {default = "terracloud-377521"}
 variable "network_name" {default = "terraclouddevnetwork"}
 variable "db_name" {default = "terraclouddevdb"}
 variable "instace_template_name" {default = "terraclouddevinstancetempalte"}

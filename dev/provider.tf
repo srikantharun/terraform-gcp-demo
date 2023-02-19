@@ -9,7 +9,7 @@ terraform {
 }
 
 provider "google" {
-  project = "terracloud-377520"
+  project = "terracloud-377521"
   region  = "europe-west3"
   zone = "europe-west3-a"
   credentials = file("gcp_single.json")
