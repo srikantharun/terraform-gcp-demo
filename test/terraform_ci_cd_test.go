@@ -40,7 +40,7 @@ func TestTerraformGcp(t *testing.T) {
             "app_instance_type"          : "e2-micro",
             "project_name"               : "terracloud-test",
             "project_id"                 : projectID,
-            "network_name"               : "terraclouddevnetwork",
+            "network_name"               : "terracloudcinetwork",
             "db_name"                    : "ci2db",
             "instace_template_name"      : "ci2temp",
             "webservers_subnet_name"     : "webci2",
