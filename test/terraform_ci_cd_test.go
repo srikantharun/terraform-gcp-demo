@@ -2,6 +2,7 @@ package test
 
 import (
 	"fmt"
+        "strings"
 	"testing"
 	"time"
 
@@ -13,12 +14,9 @@ import (
 func TestTerraformGcp(t *testing.T) {
 	t.Parallel()
 
-        instanceNumber := 1
         terraformDir := "../dev"
         projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
         //randomZone := gcp.GetRandomZoneForRegion(t, projectID, "europe-west3")
-        randomZone   := "europe-west3-a"
-        injname      := "cd2temp-webserver-instance-template"
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
 
@@ -68,9 +66,9 @@ func TestTerraformGcp(t *testing.T) {
 	maxRetries := 40
 	sleepBetweenRetries := 2 * time.Second
 
-	retry.DoWithRetry(t, fmt.Sprintf("Checking Instance %s for labels", instanceName), maxRetries, timeBetweenRetries, func() (string, error) {
+	retry.DoWithRetry(t, fmt.Sprintf("Checking Instance %s for labels", instanceName), maxRetries, sleepBetweenRetries, func() (string, error) {
 		// Look up the tags for the given Instance ID
-		instance := gcp.FetchInstance(t, projectId, instanceName)
+		instance := gcp.FetchInstance(t, projectID, instanceName)
 		instanceLabels := instance.GetLabels(t)
 
 		testingTag, containsTestingTag := instanceLabels["environmentname"]
