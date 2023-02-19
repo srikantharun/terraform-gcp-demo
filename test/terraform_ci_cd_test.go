@@ -5,10 +5,12 @@ import (
         "strings"
 	"testing"
 	"time"
+        "context"
 
 	"github.com/gruntwork-io/terratest/modules/gcp"
 	"github.com/gruntwork-io/terratest/modules/retry"
 	"github.com/gruntwork-io/terratest/modules/terraform"
+        "cloud.google.com/go/storage"
 )
 
 func TestTerraformGcp(t *testing.T) {
@@ -16,10 +18,24 @@ func TestTerraformGcp(t *testing.T) {
 
         terraformDir := "../dev"
         projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
-        //randomZone := gcp.GetRandomZoneForRegion(t, projectID, "europe-west3")
+        uniqueId := random.UniqueId()
+     
+        bucketName := fmt.Sprintf("test-tf-gcs-bucket-%s", strings.ToLower(random.UniqueId()))
+        defer gcs.DeleteStorageBucket(t,bucketName)
+    
+        gcs.CreateStorageBucket(t,projectID,bucketName, &storage.BucketAttrs{Location: "EU"})
+
+        key := fmt.Sprintf("%s/terraform.tfstate", uniqueId)
+        data := fmt.Sprintf("data-for-test-%s", uniqueId)
+ 
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
 
+         BackendConfig: map[string]interface{}{
+                        "bucket": bucketName,
+                        "key":    key,
+                        "project": data,
+                },
 
         Vars: map[string]interface{}{
             "env"                        : "cd2",
