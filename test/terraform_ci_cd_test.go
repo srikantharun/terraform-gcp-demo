@@ -18,11 +18,11 @@ func TestTerraformGcp(t *testing.T) {
         terraformDir := "../dev"
         projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
      
-        bucketName := fmt.Sprintf("test-tf-gcs-bucket-%s", "01")
+        bucketName := fmt.Sprintf("test-tf-gcs-bucket-%s", "02")
     
         gcp.CreateStorageBucket(t,projectID,bucketName, &storage.BucketAttrs{Location: "EU"})
 
-        key := fmt.Sprintf("%s/terraform.tfstate", "01")
+        key := fmt.Sprintf("%s/terraform.tfstate", "02")
         data := "gcp_single.json"
  
 	terraformOptions := &terraform.Options{
