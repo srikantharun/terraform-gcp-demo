@@ -18,6 +18,7 @@ func TestTerraformGcp(t *testing.T) {
         projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
         //randomZone := gcp.GetRandomZoneForRegion(t, projectID, "europe-west3")
         randomZone   := "europe-west3-a"
+        injname      := "cd2temp-webserver-instance-template"
 	terraformOptions := &terraform.Options{
 		TerraformDir: terraformDir,
 
@@ -58,26 +59,30 @@ func TestTerraformGcp(t *testing.T) {
 
 	// Run terraform init and apply
 	terraform.InitAndApply(t, terraformOptions)
+        instanceName := terraform.Output(t, terraformOptions, "instance_name")
 
-	// Get the instance group name from the output
-	instanceGroupName := terraform.Output(t, terraformOptions, "instance_group_name")
+	instanceGroup := gcp.FetchInstance(t, projectID, injname)
+        instance.SetLabels(t, map[string]string{"environmentname": "cd2"})
 
-	// Get the instance group
-	instanceGroup := gcp.FetchZonalInstanceGroup(t, projectID, randomZone, instanceGroupName)
-
+        expectedText := "cd2"
 	maxRetries := 40
 	sleepBetweenRetries := 2 * time.Second
 
-	// Check the instance number
-	retry.DoWithRetry(t, "Geting instances from, instance group", maxRetries, sleepBetweenRetries, func() (string, error) {
-		instances, err := instanceGroup.GetInstancesE(t, projectID)
-		if err != nil {
-			return "", fmt.Errorf("Failed to get Instances: %s", err)
+	retry.DoWithRetry(t, fmt.Sprintf("Checking Instance %s for labels", instanceName), maxRetries, timeBetweenRetries, func() (string, error) {
+		// Look up the tags for the given Instance ID
+		instance := gcp.FetchInstance(t, projectId, instanceName)
+		instanceLabels := instance.GetLabels(t)
+
+		testingTag, containsTestingTag := instanceLabels["environmentname"]
+		actualText := strings.TrimSpace(testingTag)
+		if !containsTestingTag {
+			return "", fmt.Errorf("Expected the tag 'environmentname' to exist")
 		}
 
-		if len(instances) != instanceNumber {
-			return "", fmt.Errorf("Expected to find exactly %d Compute Instances in Instance Group but found %d.", instanceNumber, len(instances))
+		if actualText != expectedText {
+			return "", fmt.Errorf("Expected GetLabelsForComputeInstanceE to return '%s' but got '%s'", expectedText, actualText)
 		}
+
 		return "", nil
 	})
 
