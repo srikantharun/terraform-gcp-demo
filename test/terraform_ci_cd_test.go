@@ -5,7 +5,7 @@ import (
         "strings"
 	"testing"
 	"time"
-        "context"
+        "random"
 
 	"github.com/gruntwork-io/terratest/modules/gcp"
 	"github.com/gruntwork-io/terratest/modules/retry"
@@ -21,9 +21,9 @@ func TestTerraformGcp(t *testing.T) {
         uniqueId := random.UniqueId()
      
         bucketName := fmt.Sprintf("test-tf-gcs-bucket-%s", strings.ToLower(random.UniqueId()))
-        defer gcs.DeleteStorageBucket(t,bucketName)
+        defer gcp.DeleteStorageBucket(t,bucketName)
     
-        gcs.CreateStorageBucket(t,projectID,bucketName, &storage.BucketAttrs{Location: "EU"})
+        gcp.CreateStorageBucket(t,projectID,bucketName, &storage.BucketAttrs{Location: "EU"})
 
         key := fmt.Sprintf("%s/terraform.tfstate", uniqueId)
         data := fmt.Sprintf("data-for-test-%s", uniqueId)
