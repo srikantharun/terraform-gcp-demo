@@ -80,5 +80,4 @@ func TestTerraformGcp(t *testing.T) {
 		return "", nil
 	})
 
-        defer terraform.Destroy(t, terraformOptions)
 }
