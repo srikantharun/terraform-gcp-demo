@@ -18,11 +18,11 @@ func TestTerraformGcp(t *testing.T) {
         terraformDir := "../dev"
         projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
      
-        bucketName := fmt.Sprintf("test-tf-gcs-bucket-%s", "02")
+        bucketName := fmt.Sprintf("test-tf-gcs-bucket-%s", "01")
     
         gcp.CreateStorageBucket(t,projectID,bucketName, &storage.BucketAttrs{Location: "EU"})
 
-        key := fmt.Sprintf("%s/terraform.tfstate", "02")
+        key := fmt.Sprintf("%s/terraform.tfstate", "01")
         data := "gcp_single.json"
  
 	terraformOptions := &terraform.Options{
@@ -35,7 +35,7 @@ func TestTerraformGcp(t *testing.T) {
                 },
 
         Vars: map[string]interface{}{
-            "env"                        : "cd2",
+            "env"                        : "cd3",
             "region"                     : "europe-west3",
             "billing_account"            : "01B7CB-3DEFDD-94C950",
             "org_id"                     : "terracloud-377521",
@@ -44,7 +44,7 @@ func TestTerraformGcp(t *testing.T) {
             "management_subnet_ip_range" : "192.168.100.0/24",
             "bastion_image"              : "centos-7-v20170918",
             "bastion_instance_type"      : "e2-micro",
-            "user"                       : "srikcd2",
+            "user"                       : "srikcd3",
             "ssh_key"                    : "gcp_single.json",
             "db_region"                  : "europe-west3",
             "appserver_count"            : "1",
@@ -53,13 +53,13 @@ func TestTerraformGcp(t *testing.T) {
             "project_name"               : "terracloud-test",
             "project_id"                 : projectID,
             "network_name"               : "terracloudcdnetwork",
-            "db_name"                    : "cd2db",
-            "instace_template_name"      : "cd2temp",
-            "webservers_subnet_name"     : "webcd2",
-            "management_subnet_name"     : "mgmtcd2",
-            "user_name"                  : "tempcd2", 
-            "user_password"              : "tempcd2",
-            "owner"                      : "sricd2",
+            "db_name"                    : "cd3db",
+            "instace_template_name"      : "cd3temp",
+            "webservers_subnet_name"     : "webcd3",
+            "management_subnet_name"     : "mgmtcd3",
+            "user_name"                  : "tempcd3", 
+            "user_password"              : "tempcd3",
+            "owner"                      : "sricd3",
         },
 
 	}
@@ -76,9 +76,9 @@ func TestTerraformGcp(t *testing.T) {
         instanceName := terraform.Output(t, terraformOptions, "instance_name")
 
 	instance := gcp.FetchInstance(t, projectID, instanceName)
-        instance.SetLabels(t, map[string]string{"environmentname": "cd2"})
+        instance.SetLabels(t, map[string]string{"environmentname": "cd3"})
 
-        expectedText := "cd2"
+        expectedText := "cd3"
 	maxRetries := 40
 	sleepBetweenRetries := 2 * time.Second
 
